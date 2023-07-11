@@ -20,6 +20,8 @@ use std::{fmt::Debug, hash::Hash};
 ///
 /// - If your query passes in parameters by index, you can use `usize` as your query parameter
 ///   type.
+/// - If your query passes in parameters by name, you can use `&str` or `String` as your query
+///   parameter type.
 /// - You can use a custom struct or enum to identify your query parameters. Just make sure to
 ///   implement `IdentifyQueryParameter` for it. See the below example for more details.
 ///
@@ -41,6 +43,10 @@ use std::{fmt::Debug, hash::Hash};
 pub trait IdentifyQueryParameter: Debug + Hash + PartialEq {}
 
 impl IdentifyQueryParameter for usize {}
+
+impl IdentifyQueryParameter for &'static str {}
+
+impl IdentifyQueryParameter for String {}
 
 #[cfg(test)]
 mod tests {
@@ -66,5 +72,17 @@ mod tests {
     fn enum_indexed() {
         uses_query_parameter(MyQueryParameterEnum::A);
         uses_query_parameter(MyQueryParameterEnum::B);
+    }
+
+    #[test]
+    fn str_indexed() {
+        uses_query_parameter("a");
+        uses_query_parameter("b");
+    }
+
+    #[test]
+    fn string_indexed() {
+        uses_query_parameter("a".to_owned());
+        uses_query_parameter("b".to_owned());
     }
 }
