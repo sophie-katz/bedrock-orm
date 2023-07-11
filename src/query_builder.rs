@@ -14,5 +14,7 @@
 // not, see <https://www.gnu.org/licenses/>.
 
 mod identify_query_parameter;
+mod provide_query_parameters;
 
 pub use identify_query_parameter::IdentifyQueryParameter;
+pub use provide_query_parameters::ProvideQueryParameters;
