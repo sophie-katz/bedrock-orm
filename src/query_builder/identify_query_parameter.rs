@@ -20,6 +20,24 @@ use std::{fmt::Debug, hash::Hash};
 ///
 /// - If your query passes in parameters by index, you can use `usize` as your query parameter
 ///   type.
+/// - You can use a custom struct or enum to identify your query parameters. Just make sure to
+///   implement `IdentifyQueryParameter` for it. See the below example for more details.
+///
+/// # Examples
+///
+/// This is an example of using a custom type to identify query parameters:
+///
+/// ```
+/// # use bedrock_orm::query_builder::IdentifyQueryParameter;
+/// #
+/// #[derive(Debug, Hash, PartialEq)]
+/// enum MyQueryParameterEnum {
+///     A,
+///     B,
+/// }
+///
+/// impl IdentifyQueryParameter for MyQueryParameterEnum {}
+/// ```
 pub trait IdentifyQueryParameter: Debug + Hash + PartialEq {}
 
 impl IdentifyQueryParameter for usize {}
@@ -30,9 +48,23 @@ mod tests {
 
     fn uses_query_parameter<T: IdentifyQueryParameter>(_: T) {}
 
+    #[derive(Debug, Hash, PartialEq)]
+    enum MyQueryParameterEnum {
+        A,
+        B,
+    }
+
+    impl IdentifyQueryParameter for MyQueryParameterEnum {}
+
     #[test]
     fn integer_indexed() {
         uses_query_parameter(0usize);
         uses_query_parameter(1usize);
+    }
+
+    #[test]
+    fn enum_indexed() {
+        uses_query_parameter(MyQueryParameterEnum::A);
+        uses_query_parameter(MyQueryParameterEnum::B);
     }
 }
