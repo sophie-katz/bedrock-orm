@@ -13,4 +13,6 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-pub mod query_builder;
+mod errors;
+
+pub use errors::{BedrockError, Result};

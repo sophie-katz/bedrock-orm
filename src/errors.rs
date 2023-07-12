@@ -13,8 +13,12 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod identify_query_parameter;
-mod provide_query_parameters;
+use thiserror::Error;
 
-pub use identify_query_parameter::IdentifyQueryParameter;
-pub use provide_query_parameters::ProvideQueryParameters;
+#[derive(Debug, Error)]
+pub enum BedrockError {
+    #[error("query parameter cannot be accessed as requested type")]
+    QueryParameterCannotBeAccessedAsRequestedType,
+}
+
+pub type Result<Value> = std::result::Result<Value, BedrockError>;
