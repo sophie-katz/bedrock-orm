@@ -13,10 +13,10 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod errors;
+use super::TakeFeatures;
 
-pub mod database_providers;
-pub mod domain;
-pub mod query_execution;
-
-pub use errors::{Error, Result};
+pub enum QueryResult<Row: TakeFeatures, RowIterator: Iterator<Item = Row>> {
+    None,
+    ChangeCount { count: usize },
+    Iterator { row_iterator: RowIterator },
+}

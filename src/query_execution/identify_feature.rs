@@ -13,10 +13,12 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod errors;
+use std::hash::Hash;
 
-pub mod database_providers;
-pub mod domain;
-pub mod query_execution;
+pub trait IdentifyFeature: Hash + PartialEq {}
 
-pub use errors::{Error, Result};
+impl IdentifyFeature for usize {}
+
+impl IdentifyFeature for &'static str {}
+
+impl IdentifyFeature for String {}

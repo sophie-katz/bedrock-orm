@@ -3,12 +3,7 @@
     "evenBetterToml.formatter.alignEntries": true,
     "evenBetterToml.formatter.indentTables": true,
     "evenBetterToml.formatter.reorderKeys": true,
-    "rust-analyzer.check.command": "clippy",
-    "rust-analyzer.check.extraArgs": [
-        "--",
-        "-W",
-        "clippy:all"
-    ],
+    "rust-analyzer.check.command": "check",
     "editor.formatOnSave": true,
     "editor.rulers": [99],
     "rust-analyzer.imports.granularity.enforce": true

@@ -13,10 +13,12 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod errors;
+use crate::domain::ValueUnion;
 
-pub mod database_providers;
-pub mod domain;
-pub mod query_execution;
+use super::IdentifyFeature;
 
-pub use errors::{Error, Result};
+pub trait TakeFeatures {
+    type Identifier: IdentifyFeature;
+
+    fn take_feature(&self, identifier: &Self::Identifier) -> crate::Result<Option<ValueUnion>>;
+}

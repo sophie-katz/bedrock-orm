@@ -13,10 +13,8 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod errors;
+use super::QueryResultType;
 
-pub mod database_providers;
-pub mod domain;
-pub mod query_execution;
-
-pub use errors::{Error, Result};
+pub trait GetQueryResultType {
+    fn query_result_type(&self) -> QueryResultType;
+}

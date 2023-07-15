@@ -13,12 +13,30 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
+use crate::domain::DataType;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
-pub enum BedrockError {
-    #[error("query parameter cannot be accessed as requested type")]
-    QueryParameterCannotBeAccessedAsRequestedType,
+pub enum Error {
+    #[error(
+        "value of type `{value_type:?}` cannot be accessed as requested type `{requested_type:?}`"
+    )]
+    ValueCannotBeAccessedAsRequestedType {
+        value_type: DataType,
+        requested_type: DataType,
+    },
+    #[error("sqlite error: {sqlite_error}")]
+    SqliteError { sqlite_error: sqlite::Error },
+    #[error("invalid feature name: {feature_name:?}")]
+    InvalidFeatureName { feature_name: String },
 }
 
-pub type Result<Value> = std::result::Result<Value, BedrockError>;
+impl From<sqlite::Error> for Error {
+    fn from(value: sqlite::Error) -> Self {
+        Self::SqliteError {
+            sqlite_error: value,
+        }
+    }
+}
+
+pub type Result<Value> = std::result::Result<Value, Error>;

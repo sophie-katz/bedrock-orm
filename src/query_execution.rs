@@ -13,10 +13,18 @@
 // You should have received a copy of the GNU General Public License along with Bedrock ORM. If
 // not, see <https://www.gnu.org/licenses/>.
 
-mod errors;
+mod execute_query;
+mod get_query_result_type;
+mod identify_feature;
+mod inject_features;
+mod query_result;
+mod query_result_type;
+mod take_features;
 
-pub mod database_providers;
-pub mod domain;
-pub mod query_execution;
-
-pub use errors::{Error, Result};
+pub use execute_query::ExecuteQuery;
+pub use get_query_result_type::GetQueryResultType;
+pub use identify_feature::IdentifyFeature;
+pub use inject_features::InjectFeatures;
+pub use query_result::QueryResult;
+pub use query_result_type::QueryResultType;
+pub use take_features::TakeFeatures;
